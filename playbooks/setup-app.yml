@@ -7,25 +7,26 @@
     vars:
       path_to_app: "/var/www/html"
 
+    #vars_prompt:
+    #  - name: "upload_var"
+    #    prompt: "Upload the index.php file?"
+    #  - name: "create_var"
+    #    prompt: "Create info.php page?"
+
     tasks:
       - name: Upload application file
         copy:
           src: ../index.php
           dest: "{{ path_to_app }}"
           mode: 0755
+        #when: upload_var == 'yes'
+        tags: upload
 
       - name: Create simple info 
         copy:
           dest: "{{ path_to_app }}/info.php"
           content: "<h1> {{ ansible_hostname }} </h1>"
-
-      - name: See directory contents
-        command: ls -ak {{ path_to_app }}
-        register: dir_contents
-
-      - name: Directory contents
-        debug:
-          msg: "{{ dir_contents }}"
+        #when: create_var == 'yes'
       
       - name: Configure php.ini file
         lineinfile:
