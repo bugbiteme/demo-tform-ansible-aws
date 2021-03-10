@@ -130,3 +130,12 @@ output "web_host_2" {
   value       = "ssh -i ec2-key.pem ec2-user@${aws_instance.ec2_instance[2].public_dns}"
 }
 
+output "website_lb" {
+  description = "can access once Ansible has done its job"
+  value       = "http://${aws_instance.ec2_instance[0].public_dns}"
+}
+
+output "website_test_lb" {
+  description = "can access once Ansible has done its job"
+  value       = "http://${aws_instance.ec2_instance[0].public_dns}/info.php"
+}
