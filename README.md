@@ -1,13 +1,25 @@
-Stack name: AnsibleCourseStack
-Key Name
-NameOfService: ansible-instances
-LnPublicIpAddressInstance1	3.226.90.212	
-LnPublicIpAddressInstance2	18.206.4.126	
-LnPublicIpAddressLoadBalancer	52.70.9.27
+# Create and deploy an Apache LB abn two Apache web hosts
 
-ssh -i "~/key/ansible-course-key-pair.pem" ec2-user@3.226.90.212
-ssh -i "~/key/ansible-course-key-pair.pem" ec2-user@18.206.4.126
-ssh -i "~/key/ansible-course-key-pair.pem" ec2-user@52.70.9.27
+Uses Terraform to deplploy three identical EC2 instances
+Terraform will dynamically generate an Ansible inventory file 'host-dev'
+It will also dynamically create an SSH keypair and place the private key in this directory.
+
+Once all three instances have been deploployed, run the Ansible playbook
+'playbooks/all-playbooks.yml'
+
+command: 'ansible-playbook playbooks/all-playbooks.yml'
+
+Ansible will update and install Apache on all server and configure the first host to be
+a loadbalancer. The other two servers will host a web page that is accessed through the 
+loadbalancer.
+
+enter the IP address of the LB to see the main webpage
+
+To test out loadbalancer, add /info.pho to the end of the IP address, and refresh to see
+loadbalancing in action... exiting!!!
+
+http://<lb IP address>/info.php
+
 
 Some adhoc commands:
 ansible -m ping all
@@ -17,16 +29,13 @@ ansible -m shell -a "uname" all
 Module Index:
 https://docs.ansible.com/ansible/2.9/modules/modules_by_category.html
 
-playbook commands:
+playbooks commands:
 ansible-playbook playbooks/ping.yml
 ansible-playbook playbooks/uname.yml
 ansible-playbook playbooks/yum-update.yml
-
 ansible-playbook playbooks/yum-update.yml 
-
 ansible-playbook playbooks/setup-lb.yml
-http://<lb IP address>
-http://<lb IP address>/balancer-manager
+
 
 
 ansible -m setup app1  (get variable info on a system)
@@ -38,4 +47,7 @@ ansible -m setup webservers | grep ansible_hostname
         "ansible_hostname": "ip-172-31-1-131",
         "ansible_hostname": "ip-172-31-3-65",
 
-http://<lb IP address>/info.php
+
+
+check mode
+ansible-playbook playbooks/setup-app.yml --check
