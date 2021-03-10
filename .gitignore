@@ -34,3 +34,5 @@ override.tf.json
 terraform.rc
 
 *.pem
+
+hosts-dev
