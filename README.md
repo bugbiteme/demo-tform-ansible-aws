@@ -24,17 +24,21 @@ loadbalancing in action... exiting!!!
 ### Prereqs:
 
 - Ansible and Terraform are installed on your local system
+
 On a Mac:
+
 `brew install terraform ansible`
 
 - The AWS CLI has been installed and configured with your access key and key ID on the local system
 
 ### Provision VMs and configure loadbalancer and web servers
 Note: Output will provide a link to access the website and test load balancer
+
 `sh provision_and_config.sh`
 
 ## Clean up VMs when you are done
 Note: This will delete all of the VMs, but will prompt you before doing so.
+
 `sh cleanup.sh`
 
 #### Other random stuff
@@ -65,14 +69,17 @@ ansible-playbook playbooks/setup-lb.yml
 
 `ansible -m setup app1`  (get variable info on a system)
 
-`ansible -m setup app1 | grep ansible_hostname`
-        `"ansible_hostname": "ip-172-31-1-131",`
+```
+ansible -m setup app1 | grep ansible_hostname`
+        `"ansible_hostname": "ip-172-31-1-131",
 
 `ansible -m setup webservers | grep ansible_hostname`
         `"ansible_hostname": "ip-172-31-1-131",`
         `"ansible_hostname": "ip-172-31-3-65",`
 
-
+```
 
 check mode
+
+
 `ansible-playbook playbooks/setup-app.yml --check`
