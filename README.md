@@ -1,4 +1,4 @@
-# Create and deploy an Apache LB abn two Apache web hosts
+# Create and deploy an Apache LB and two Apache web hosts
 
 Uses Terraform to deplploy three identical EC2 instances
 Terraform will dynamically generate an Ansible inventory file 'host-dev'
