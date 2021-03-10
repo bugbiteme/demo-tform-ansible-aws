@@ -4,16 +4,17 @@
 - Terraform will dynamically generate an Ansible inventory file 'host-dev'
 - It will also dynamically create an SSH keypair and place the private key in this directory.
 
+![Diagram](img/demo-tform-ansible-aws.png)
+
 Once all three instances have been deploployed, run the Ansible playbook
 `playbooks/all-playbooks.yml`
 
 command: `ansible-playbook playbooks/all-playbooks.yml`
 
 Ansible will update and install Apache on all server and configure the first host to be
-a loadbalancer. The other two servers will host a web page that is accessed through the 
-loadbalancer.
+a loadbalancer. Ansible will then deploy a PHP website to the other two servers that is accessed through the loadbalancer.
 
-Connect tothe IP address of the LB to view the main webpage
+Once complete, you can connect to the IP address of the LB to view the main webpage
 
 To test out loadbalancer, add /info.pho to the end of the LB IP address, and refresh to see
 loadbalancing in action... exiting!!!
