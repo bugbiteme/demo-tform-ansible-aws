@@ -6,7 +6,7 @@
 
 ![Diagram](img/demo-tform-ansible-aws.png)
 
-Once all three instances have been deploployed, run the Ansible playbook
+Once all three instances have been deployed, run the Ansible playbook
 `playbooks/all-playbooks.yml`
 
 command: `ansible-playbook playbooks/all-playbooks.yml`
