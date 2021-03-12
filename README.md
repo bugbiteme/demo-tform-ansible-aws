@@ -42,9 +42,9 @@ Note: This will delete all of the VMs, but will prompt you before doing so.
 
 `sh cleanup.sh`
 
-#### Other random stuff
+## Other random stuff
 
-Some adhoc commands:
+### Some adhoc commands:
 
 ```
 ansible -m ping all
@@ -53,10 +53,10 @@ ansible -m shell -a "uname" all
 
 ```
 
-Module Index:
+### Module Index:
 https://docs.ansible.com/ansible/2.9/modules/modules_by_category.html
 
-playbooks commands:
+### playbooks commands:
 
 ```
 ansible-playbook playbooks/ping.yml
@@ -71,16 +71,15 @@ ansible-playbook playbooks/setup-lb.yml
 `ansible -m setup app1`  (get variable info on a system)
 
 ```
-ansible -m setup app1 | grep ansible_hostname`
-        `"ansible_hostname": "ip-172-31-1-131",
+ansible -m setup app1 | grep ansible_hostname
+        "ansible_hostname": "ip-172-31-1-131",
 
-`ansible -m setup webservers | grep ansible_hostname`
-        `"ansible_hostname": "ip-172-31-1-131",`
-        `"ansible_hostname": "ip-172-31-3-65",`
+ansible -m setup webservers | grep ansible_hostname
+        "ansible_hostname": "ip-172-31-1-131",
+        "ansible_hostname": "ip-172-31-3-65",
 
 ```
 
-check mode
-
+### check mode
 
 `ansible-playbook playbooks/setup-app.yml --check`

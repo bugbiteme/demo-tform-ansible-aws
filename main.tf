@@ -64,7 +64,6 @@ resource "aws_security_group" "allow_ssh" {
 }
 
 
-
 // Configure the EC2 instance itself
 
 resource "aws_instance" "ec2_instance" {
@@ -81,28 +80,22 @@ resource "aws_instance" "ec2_instance" {
 
 }
 
-
 // generate inventory file
+resource "local_file" "inventory" {
+  filename = "./hosts-dev"
+  content  = <<EOF
+    # hosts-dev
 
-resource null_resource create_hosts_dev {
+    [loadbalancers]
+    lb1 ansible_host=${aws_instance.ec2_instance[0].public_ip}
 
-  provisioner "local-exec" {
-    interpreter = ["/usr/local/bin/zsh", "-c"]
-    command = <<-EOT
-      echo "# hosts-dev" > ./hosts-dev
-      echo "" >> ./hosts-dev
-      echo "[loadbalancers]" >> ./hosts-dev
-      echo "lb1 ansible_host=${aws_instance.ec2_instance[0].public_ip}" >> ./hosts-dev
-      echo "" >> ./hosts-dev
-      echo "[webservers]" >> ./hosts-dev
-      echo "app1 ansible_host=${aws_instance.ec2_instance[1].public_ip}" >> ./hosts-dev
-      echo "app2 ansible_host=${aws_instance.ec2_instance[2].public_ip}" >> ./hosts-dev
-      echo "" >> ./hosts-dev
-      echo "[local]" >> ./hosts-dev
-      echo "control ansible_connection=local" >> ./hosts-dev
-    EOT
-  }
+    [webservers]
+    app1 ansible_host=${aws_instance.ec2_instance[1].public_ip}
+    app2 ansible_host=${aws_instance.ec2_instance[2].public_ip}
 
+    [local]
+    control ansible_connection=local
+    EOF
 }
 
 // Output the public_ip and the Ansible command to connect to ec2 instance
@@ -111,12 +104,7 @@ output "ec2_instance_ip" {
   description = "IP address of the EC2 instance"
   value       = aws_instance.ec2_instance.*.public_ip
 }
-/*
-output "ec2_instance_public_dns" {
-  description = "DNS name of the EC2 instance"
-  value       = aws_instance.ec2_instance.public_dns
-}
-*/
+
 output "load_balancer" {
   description = "Copy/Paste/Enter - You are in the matrix"
   value       = "ssh -i ec2-key.pem ec2-user@${aws_instance.ec2_instance[0].public_dns}"
