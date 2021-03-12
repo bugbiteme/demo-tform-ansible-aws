@@ -64,10 +64,21 @@ resource "aws_security_group" "allow_ssh" {
 }
 
 
+
 // Configure the EC2 instance itself
+// Create aws_ami filter to pick up the ami available in your region
+data "aws_ami" "amazon-linux-2" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm*"]
+  }
+}
 
 resource "aws_instance" "ec2_instance" {
-  ami                         = "ami-0915bcb5fa77e4892"
+  ami                         = data.aws_ami.amazon-linux-2.id
   associate_public_ip_address = true
   count                       = 3
   instance_type               = "t2.micro"
